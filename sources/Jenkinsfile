@@ -15,7 +15,7 @@ pipeline {
             steps {
                 //This sh step runs the Python command to compile your application and
                 //its calc library into byte code files, which are placed into the sources workspace directory
-                sh 'python -m py_compile sources/add2vals.py sources/calc.py'
+                sh 'python -m py_compile sources/add2val.py sources/calc.py'
                 //This stash step saves the Python source code and compiled byte code files from the sources
                 //workspace directory for use in later stages.
                 stash(name: 'compiled-results', includes: 'sources/*.py*')
@@ -65,16 +65,16 @@ pipeline {
                             unstash(name: 'compiled-results')
 
                             //This sh step executes the pyinstaller command (in the PyInstaller container) on your simple Python application.
-                            //This bundles your add2vals.py Python application into a single standalone executable file
+                            //This bundles your add2val.py Python application into a single standalone executable file
                             //and outputs this file to the dist workspace directory (within the Jenkins home directory).
-                            sh "docker run --rm -v ${VOLUME} ${IMAGE} 'pyinstaller -F add2vals.py'"
+                            sh "docker run --rm -v ${VOLUME} ${IMAGE} 'pyinstaller -F add2val.py'"
                         }
                     }
                     post {
                         success {
                             //This archiveArtifacts step archives the standalone executable file and exposes this file
                             //through the Jenkins interface.
-                            archiveArtifacts "${env.BUILD_ID}/sources/dist/add2vals"
+                            archiveArtifacts "${env.BUILD_ID}/sources/dist/add2val"
                             sh "docker run --rm -v ${VOLUME} ${IMAGE} 'rm -rf build dist'"
                         }
                     }
