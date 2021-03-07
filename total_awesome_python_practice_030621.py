@@ -4,6 +4,20 @@ print('Morning, Jordan !!!')
 
 import mymodule_030621
 import json
+from optparse import OptionParser
+
+parser=OptionParser()
+parser.add_option("-f", "--file", action="store", type="string", dest="file", help="<file>")
+
+(options, args)=parser.parse_args()
+
+if options.file == None:
+  print("Please use --help for options")
+  sys.exit(1)
+else:
+  x=open("item","ro")
+  print(x.read())
+  
 
 class weekend():
   extra_day_off="yes extra day off"
@@ -180,3 +194,17 @@ for v in t:
 
 print("after get rid of duplicate items becomes: " + str(u))
  
+# open function and read method
+
+w=open("item", "ro")
+print(w.read())
+
+# format 1
+
+print("your name is {fname} and your age is {age}".format(fname="Frank Hole", age=21))
+
+# format 2
+
+carbrand="Toyota"
+
+print("your car model is %s" % carbrand)
